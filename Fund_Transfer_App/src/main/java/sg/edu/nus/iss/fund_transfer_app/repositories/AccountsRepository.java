@@ -1,8 +1,6 @@
 package sg.edu.nus.iss.fund_transfer_app.repositories;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
@@ -25,9 +23,6 @@ public class AccountsRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
-    @Autowired @Qualifier("transfers")
-    private RedisTemplate<String, String> redisTemplate;
 
     // Get list of all accounts
     public List<Account> getAllAccounts() {

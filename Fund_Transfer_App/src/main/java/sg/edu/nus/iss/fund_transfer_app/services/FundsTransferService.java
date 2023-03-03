@@ -7,6 +7,7 @@ import sg.edu.nus.iss.fund_transfer_app.exception.TransferException;
 import sg.edu.nus.iss.fund_transfer_app.models.Account;
 import sg.edu.nus.iss.fund_transfer_app.models.Transfer;
 import sg.edu.nus.iss.fund_transfer_app.repositories.AccountsRepository;
+import sg.edu.nus.iss.fund_transfer_app.repositories.RedisRepository;
 import sg.edu.nus.iss.fund_transfer_app.utils.Util;
 
 import java.util.List;

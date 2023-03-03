@@ -12,6 +12,7 @@ import sg.edu.nus.iss.fund_transfer_app.exception.TransferException;
 import sg.edu.nus.iss.fund_transfer_app.models.Account;
 import sg.edu.nus.iss.fund_transfer_app.models.Transfer;
 import sg.edu.nus.iss.fund_transfer_app.services.FundsTransferService;
+import sg.edu.nus.iss.fund_transfer_app.services.LogAuditService;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -23,6 +24,9 @@ public class FundsTransferController {
 
     @Autowired
     private FundsTransferService fundsTransferSvc;
+
+    @Autowired
+    private LogAuditService logAuditSvc;
 
     @GetMapping(path = {"/", "/index.html"})
     public String getForm(Model model) {
@@ -81,7 +85,8 @@ public class FundsTransferController {
             return "index";
         }
 
-        fundsTransferSvc.performTransfer(transfer);
+        Transfer success = fundsTransferSvc.performTransfer(transfer);
+        logAuditSvc.logTransaction(success);
 
         return "transfer";
     }
