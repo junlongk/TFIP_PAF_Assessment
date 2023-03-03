@@ -17,14 +17,14 @@
             <div>
                 <label for="from-account">From account:</label>
                 <select name="from" id="from-account">
-                    <option data-th-each="a: ${accounts}" data-th-value="${a}" data-th-text="${a}"></option>
+                    <option data-th-each="a: ${accounts}" data-th-value="${a.getIdentifier()}" data-th-text="${a.getIdentifier()}"></option>
                 </select>
             </div>
 
             <div>
                 <label for="to-account">To account:</label>
                 <select name="to" id="to-account">
-                    <option data-th-each="a: ${accounts}" data-th-value="${a}" data-th-text="${a}"></option>
+                    <option data-th-each="a: ${accounts}" data-th-value="${a.getIdentifier()}" data-th-text="${a.getIdentifier()}"></option>
                 </select>
             </div>
 

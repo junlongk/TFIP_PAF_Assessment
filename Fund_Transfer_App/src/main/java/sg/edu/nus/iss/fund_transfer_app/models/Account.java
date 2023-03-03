@@ -4,6 +4,7 @@ public class Account {
     private String name;
     private String accountId;
     private float balance;
+    private String identifier;
 
     public String getName() {
         return name;
@@ -29,8 +30,16 @@ public class Account {
         this.balance = balance;
     }
 
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
     @Override
     public String toString() {
-        return "Account{name='%s', accountId='%s', balance=%s}".formatted(name, accountId, balance);
+        return "Account{name='%s', accountId='%s', balance=%s, identifier='%s'}".formatted(name, accountId, balance, identifier);
     }
 }

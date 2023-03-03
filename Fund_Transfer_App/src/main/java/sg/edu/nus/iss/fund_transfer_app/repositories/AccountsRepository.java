@@ -9,11 +9,14 @@ import org.springframework.stereotype.Repository;
 import sg.edu.nus.iss.fund_transfer_app.models.Account;
 
 import java.util.List;
+import java.util.logging.Logger;
 
-import static sg.edu.nus.iss.fund_transfer_app.repositories.Queries.*;
+import static sg.edu.nus.iss.fund_transfer_app.repositories.Queries.SQL_GET_ALL_ACCOUNTS;
 
 @Repository
 public class AccountsRepository {
+
+    private final Logger logger = Logger.getLogger(AccountsRepository.class.getName());
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
