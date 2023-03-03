@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import sg.edu.nus.iss.fund_transfer_app.exception.TransferException;
 import sg.edu.nus.iss.fund_transfer_app.models.Account;
 import sg.edu.nus.iss.fund_transfer_app.models.Transfer;
 import sg.edu.nus.iss.fund_transfer_app.services.FundsTransferService;
@@ -34,7 +35,7 @@ public class FundsTransferController {
     @PostMapping(path = "/transfer")
     public String postTransfer(@Valid Transfer transfer,
                                BindingResult bindingResult,
-                               Model model) {
+                               Model model) throws TransferException {
 
         System.out.printf("Account from: %s\n".formatted(transfer.getAccountFromId()));
         System.out.printf("Account to: %s\n".formatted(transfer.getAccountToId()));
@@ -79,6 +80,8 @@ public class FundsTransferController {
             model.addAttribute("transfer", transfer);
             return "index";
         }
+
+        fundsTransferSvc.performTransfer(transfer);
 
         return "transfer";
     }

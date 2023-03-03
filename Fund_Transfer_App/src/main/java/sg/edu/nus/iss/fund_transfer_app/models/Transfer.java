@@ -13,22 +13,9 @@ public class Transfer implements Serializable {
 
     public static final long serialVersionUID = 1L;
     private String transactionId;
-
-//    @NotNull(message = "Please specify an account to transfer to!")
-//    @Size(min = 10, max = 10)
     private String accountToId;
-
-//    @NotNull(message = "Please specify an account to transfer from!")
-//    @Size(min = 10, max = 10)
     private String accountFromId;
-
-    private float accountFromBalance;
-
-//    @NotNull
-//    @DecimalMin(value = "2", message = "Must be 2 decimals")
-//    @Min(value = 10, message = "Minimum transfer amount is $10")
     private float amount;
-
     private String comments;
 
     public String getTransactionId() {
@@ -55,14 +42,6 @@ public class Transfer implements Serializable {
         this.accountFromId = accountFromId;
     }
 
-    public float getAccountFromBalance() {
-        return accountFromBalance;
-    }
-
-    public void setAccountFromBalance(float accountFromBalance) {
-        this.accountFromBalance = accountFromBalance;
-    }
-
     public float getAmount() {
         return amount;
     }
@@ -81,7 +60,7 @@ public class Transfer implements Serializable {
 
     @Override
     public String toString() {
-        return "Transfer{transactionId='%s', accountToId='%s', accountFromId='%s', accountFromBalance=%s, amount=%s, comments='%s'}"
-                .formatted(transactionId, accountToId, accountFromId, accountFromBalance, amount, comments);
+        return "Transfer{transactionId='%s', accountToId='%s', accountFromId='%s', amount=%s, comments='%s'}"
+                .formatted(transactionId, accountToId, accountFromId, amount, comments);
     }
 }

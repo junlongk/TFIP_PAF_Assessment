@@ -6,10 +6,18 @@ public class Queries {
             """;
 
     public static final String SQL_GET_ACCOUNT_BY_ID = """
-            select * from accounts where account_id = ?;
+            select * from accounts where account_id = ?
             """;
 
     public static final String SQL_GET_ACCOUNT_BALANCE = """
-            select balance from accounts where account_id = ?;
+            select balance from accounts where account_id = ?
+            """;
+
+    public static final String SQL_WITHDRAW_FROM_ACCOUNT = """
+            update accounts set balance = balance - ? where account_id = ?
+            """;
+
+    public static final String SQL_DEPOSIT_INTO_ACCOUNT = """
+            update accounts set balance = balance + ? where account_id = ?
             """;
 }

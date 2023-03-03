@@ -2,11 +2,16 @@ package sg.edu.nus.iss.fund_transfer_app.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import sg.edu.nus.iss.fund_transfer_app.exception.TransferException;
 import sg.edu.nus.iss.fund_transfer_app.models.Account;
+import sg.edu.nus.iss.fund_transfer_app.models.Transfer;
 import sg.edu.nus.iss.fund_transfer_app.repositories.AccountsRepository;
 import sg.edu.nus.iss.fund_transfer_app.utils.Util;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @Service
@@ -70,7 +75,31 @@ public class FundsTransferService {
 
     // C5 - Check for sufficient funds on from account
     public boolean c5Check (String accountFromId, float amount) {
-        float accountBalance = accountsRepo.getAccountBalance(accountFromId);
-        return accountBalance - amount >= 0;
+        Optional<Float> accountBalance = accountsRepo.getAccountBalance(accountFromId);
+        if (accountBalance.isEmpty())
+            return false;
+        return accountBalance.get() - amount >= 0;
+    }
+
+    // Process fund transfer after all checks are cleared
+    @Transactional(rollbackFor = TransferException.class)
+    public Transfer performTransfer(Transfer transfer) throws TransferException {
+        String accountFromId = transfer.getAccountFromId();
+        String accountToId = transfer.getAccountToId();
+        float amount = transfer.getAmount();
+
+        String transactionId = UUID.randomUUID().toString().substring(0, 8);
+        transfer.setTransactionId(transactionId);
+
+        final Optional<Float> optFrom = accountsRepo.getAccountBalance(accountFromId);
+        final Optional<Float> optTo = accountsRepo.getAccountBalance(accountToId);
+
+        if (optFrom.isEmpty() || optTo.isEmpty() || (optFrom.get() < amount))
+            throw new TransferException();
+
+        accountsRepo.withdraw(amount, accountFromId);
+        accountsRepo.deposit(amount, accountToId);
+
+        return transfer;
     }
 }
