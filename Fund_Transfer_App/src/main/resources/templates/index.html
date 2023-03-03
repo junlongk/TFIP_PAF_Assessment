@@ -6,6 +6,7 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>TFIP Bank</title>
+        <link rel="stylesheet" href="/styles.css">
     </head>
 
     <body>
@@ -13,41 +14,51 @@
             <h1>Fund Transfer</h1>
         </div>
 
-        <form method="POST" data-th-action="@{/transfer}" data-th-object="${accounts}">
+        <form method="POST" data-th-action="@{/transfer}">
             <div>
                 <label for="from-account">From account:</label>
-                <select name="from" id="from-account">
-                    <option data-th-each="a: ${accounts}" data-th-value="${a.getIdentifier()}" data-th-text="${a.getIdentifier()}"></option>
+                <select name="accountFromId" id="from-account">
+                    <option data-th-each="a: ${accounts}" data-th-value="${a.accountId}" data-th-text="${a.identifier}" data-th-field="${transfer.accountFromId}"></option>
                 </select>
             </div>
 
             <div>
                 <label for="to-account">To account:</label>
-                <select name="to" id="to-account">
-                    <option data-th-each="a: ${accounts}" data-th-value="${a.getIdentifier()}" data-th-text="${a.getIdentifier()}"></option>
+                <select name="accountToId" id="to-account">
+                    <option data-th-each="a: ${accounts}" data-th-value="${a.accountId}" data-th-text="${a.identifier}" data-th-field="${transfer.accountToId}"></option>
                 </select>
             </div>
 
             <div>
                 <label for="amount">Amount:</label>
-                <input type="text" name="amount" id="amount">
+                <input type="text" name="amount" id="amount" data-th-field="${transfer.amount}">
             </div>
 
             <div>
                 <label for="comments">Comments:</label>
-                <textarea name="comments" id="comments"></textarea>
+                <textarea name="comments" id="comments" data-th-field="${transfer.comments}"></textarea>
             </div>
 
             <div>
                 <button type="submit">Transfer</button>
             </div>
 
-            <div>
-                <span class="error" data-th-if="${#fields.hasErrors()}" data-th-errors="*{}"></span>
-                <br />
-            </div>
-
+<!--            <div>-->
+<!--                <span class="error" data-th-if="${#fields.hasErrors('transfer.accountFromId')}" data-th-errors="${transfer.accountFromId}"></span>-->
+<!--                <br />-->
+<!--                <span class="error" data-th-if="${#fields.hasErrors('transfer.accountToId')}" data-th-errors="${transfer.accountToId}"></span>-->
+<!--                <br />-->
+<!--                <span class="error" data-th-if="${#fields.hasErrors('transfer.amount')}" data-th-errors="${transfer.amount}"></span>-->
+<!--                <br />-->
+<!--                <span class="error" data-th-if="${#fields.hasErrors('transfer.comments')}" data-th-errors="${transfer.comments}"></span>-->
+<!--                <br />-->
+<!--            </div>-->
 
         </form>
+
+        <ul>
+            <li class="error" data-th-each="err : ${#fields.errors('transfer.*')}" data-th-text="${err}" />
+            <li class="error" data-th-each="globalErr : ${#fields.errors('global')}" data-th-text="${globalErr}" />
+        </ul>
     </body>
 </html>

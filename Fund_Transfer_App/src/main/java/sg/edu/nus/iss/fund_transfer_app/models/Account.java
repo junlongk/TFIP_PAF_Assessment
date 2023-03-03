@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.fund_transfer_app.models;
 
+import java.math.BigDecimal;
+
 public class Account {
     private String name;
     private String accountId;
@@ -40,6 +42,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{name='%s', accountId='%s', balance=%s, identifier='%s'}".formatted(name, accountId, balance, identifier);
+        return "Account{name='%s', accountId='%s', balance=%s, identifier='%s'}"
+                .formatted(name, accountId, balance, identifier);
     }
 }
