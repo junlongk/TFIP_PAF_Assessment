@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>TFIP Bank</title>
+    </head>
+
+    <body>
+        <div>
+            <h1>Fund Transfer</h1>
+        </div>
+
+        <form method="POST" data-th-action="@{/transfer}" data-th-object="${accounts}">
+            <div>
+                <label for="from-account">From account:</label>
+                <select name="from" id="from-account">
+                    <option data-th-each="a: ${accounts}" data-th-value="${a}" data-th-text="${a}"></option>
+                </select>
+            </div>
+
+            <div>
+                <label for="to-account">To account:</label>
+                <select name="to" id="to-account">
+                    <option data-th-each="a: ${accounts}" data-th-value="${a}" data-th-text="${a}"></option>
+                </select>
+            </div>
+
+            <div>
+                <label for="amount">Amount:</label>
+                <input type="text" name="amount" id="amount">
+            </div>
+
+            <div>
+                <label for="comments">Comments:</label>
+                <textarea name="comments" id="comments"></textarea>
+            </div>
+
+            <div>
+                <button type="submit">Transfer</button>
+            </div>
+
+            <div>
+                <span class="error" data-th-if="${#fields.hasErrors()}" data-th-errors="*{}"></span>
+                <br />
+            </div>
+
+
+        </form>
+    </body>
+</html>
